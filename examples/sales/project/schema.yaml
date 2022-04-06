@@ -1,0 +1,21 @@
+target: 'output/result_table.csv'
+driver: 'python'
+sources:
+  - 'sales_source_a_table'
+  - 'sales_source_b_table'
+  - 'sales_source_c_table'
+name: 'aggregate_sales'
+columns:
+  - name: 'uuid'
+    entity: 'uuid'
+    origin: 'id'
+    keyed: true
+  - name: 'timestamp'
+    origin: 'ts'
+    type:
+      datatype: 'timestamp'
+      frequency: 4h
+  - name: 'sales'
+    origin: 'sales'
+    type:
+      datatype: 'integer'

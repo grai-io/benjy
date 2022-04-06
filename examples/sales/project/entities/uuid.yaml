@@ -1,0 +1,4 @@
+entities:
+  - name: uuid
+    source: uuid_table
+    column: uuid

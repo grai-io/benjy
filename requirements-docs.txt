@@ -1,0 +1,6 @@
+mkdocs
+mkdocs-material
+mkdocs-mermaid2-plugin
+mkdocstrings
+mkdocs-macros-plugin
+mkdocs-jupyter

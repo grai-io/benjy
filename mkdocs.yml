@@ -1,0 +1,28 @@
+site_name: Benjy
+repo_url: https://github.com/grai-io/benjy
+
+nav:
+    - Home: index.md
+    - 'about.md'
+
+
+markdown_extensions:
+    - smarty
+    - wikilinks
+    - toc
+    - admonition
+    - sane_lists
+    - codehilite
+    - meta
+    - nl2br
+
+plugins:
+    - search
+    - mermaid2
+    - mkdocstrings
+    - macros
+    - mkdocs-jupyter
+
+theme:
+    name: material
+    logo: assets/icon-logo-0.svg

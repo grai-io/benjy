@@ -1,0 +1,15 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  web:
+    build: .
+    ports:
+      - "8000:5000"
+    volumes:
+      - .:/code
+      - dbvol:/var/log
+    links:
+      - redis
+  postgres:
+    image: postgres
+volumes:
+  dbvol: {}

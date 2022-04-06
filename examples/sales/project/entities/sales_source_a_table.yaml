@@ -1,0 +1,10 @@
+entities:
+  - name: source_a_id
+    source: sales_source_a_table
+    column: id
+    relations:
+      - name: uuid
+        crosswalk:
+          source: crosswalk_uuid_a_table
+          from: id_a
+          to: uuid
