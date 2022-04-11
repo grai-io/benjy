@@ -20,10 +20,11 @@ def prep_build_path(target):
 
 
 @cli.command("compile")
-@click.option('-t', "target", type=str, default='.')
+@click.argument("target", nargs=1, type=click.File('r'))
 @click.pass_context
 def compile(ctx, target):
-
+    if not target:
+        target = '.'
     build_path = prep_build_path(target)
     entities_path = os.path.join(build_path, 'entities.pickle')
 
@@ -34,10 +35,10 @@ def compile(ctx, target):
     source_ref.write_source_refs()
 
 
-@cli.command("build")
+@cli.command("submit")
 @click.option('-t', "target", type=str, default='.')
 @click.pass_context
-def build(ctx, target):
+def submit(ctx, target):
     schema_path = os.path.join(target, 'schema.yaml')
     schema = Schema(schema_path)
 
