@@ -2,12 +2,12 @@
 
 Benjy is a data as code tool allowing users to 
 
-* declaratively define and build your data environment
-* Defines the relationships between data throughout the organization in code.
-* Data search, discovery, and lineage.
+* Declaratively define and build their data environment, in code.
+* Define the relationships between data throughout an organization, in code.
+* Data search, discovery, and lineage. 
 
 Much like SQL allows you to define relationships between data within a single database, 
-benjy allows you to define relationships between data across multiple data resources (databases, flat files, APIs, etc...).
+Benjy allows you to define relationships between data across multiple data resources (databases, flat files, APIs, etc...).
 The end result is a graph expressing the relationships between all of your team or organization's data.
 
 

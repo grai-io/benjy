@@ -1,14 +1,21 @@
 site_name: Benjy
 repo_url: https://github.com/grai-io/benjy
+repo_name: grai-io/benjy
 
 nav:
     - Home: index.md
     - 'User Guide': 
-        - 'Quick Start': user_guide/quick_start.md
+        - Installation: user_guide/installation.md
+        - "Getting Started": user_guide/getting_started.md
         - Components: user_guide/components.md
+    - API: reference/
+    - cli: cli.md
+
+
 
 
 markdown_extensions:
+    - mkdocs_click
     - smarty
     - wikilinks
     - toc
@@ -21,13 +28,37 @@ markdown_extensions:
           - name: mermaid
             class: mermaid
             format: !!python/name:pymdownx.superfences.fence_code_format
+
 plugins:
     - search
     - mermaid2
-    - mkdocstrings
+    - section-index
+    - gen-files:
+        scripts:
+        - docs/gen_ref_pages.py
+    - literate-nav:
+        nav_file: SUMMARY.md
+    - mkdocstrings:
+        default_handler: python
+        watch:
+          - src/benjy
+        handlers:
+          python:
+            rendering:
+              show_submodules: no
+              show_source: no
+
     - macros
     - mkdocs-jupyter
 
+
 theme:
-    name: material
-    logo: assets/icon-logo-0.svg
+  name: material
+  logo: assets/icon-logo-0.svg
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    - header.autohide
+    - navigation.sections
+    - navigation.top
+    - toc.integrate

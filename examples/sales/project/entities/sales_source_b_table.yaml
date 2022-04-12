@@ -1,7 +1,7 @@
 
 entities:
   - name: source_b_id
-    source:
+    source: sales_source_b_table
     column: id
     relations:
       - name: uuid

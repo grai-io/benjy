@@ -8,13 +8,19 @@ name: 'aggregate_sales'
 columns:
   - name: 'uuid'
     entity: 'uuid'
-    origin: 'id'
+    origin:
+      - name: sales_source_a_table
+        value: 'id'
+      - name: 'sales_source_b_table'
+        value: 'id'
+      - name: 'sales_source_c_table'
+        value: 'id'
     keyed: true
   - name: 'timestamp'
     origin: 'ts'
     type:
       datatype: 'timestamp'
-      frequency: 4h
+      frequency: d
   - name: 'sales'
     origin: 'sales'
     type:

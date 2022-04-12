@@ -1,22 +1,18 @@
-.PHONY: start
+.PHONY: setup clear
 
 #################################################################################
 # COMMANDS                                                                      #
 #################################################################################
 
-## Start the demo
 
 ## Make fresh sales data
 setup:
 	@ python make_data.py
-	@ benjy build
-## Stop the demo
-stop:
-	@ docker-compose down
+
 
 ## Clean up demo files
 clear:
-	@ rm -r sales_data*
+	@rm -r project/data/*.csv project/build/*.pickle project/output/*.csv project/data/crosswalks/*.csv
 
 
 #################################################################################

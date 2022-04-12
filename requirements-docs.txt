@@ -4,3 +4,7 @@ mkdocs-mermaid2-plugin
 mkdocstrings
 mkdocs-macros-plugin
 mkdocs-jupyter
+mkdocs_click
+mkdocs-gen-files
+mkdocs-literate-nav
+mkdocs-section-index

@@ -2,10 +2,11 @@ import pandas as pd
 import os
 from functools import singledispatch
 from typing import Any, Callable
-from ..datatypes import Float, Integer, Timestamp
+from ..datatypes import Float, Integer, Timestamp, String, Bool
 from visions import StandardSet
 
 typeset = StandardSet()
+
 
 def identify_source(source):
     ext = os.path.splitext(source)[1]
@@ -13,19 +14,25 @@ def identify_source(source):
 
 
 def loader(source):
-    source_types = {
-        '.csv': pd.read_csv
-    }
+    source_types = {}
     source_type = identify_source(source)
-    return source_types[source_type]
+    if source_type in source_types:
+        return source_types[source_type]
+    elif hasattr(pd, f"read_{source_type[1:]}"):
+        return getattr(pd, f"read_{source_type[1:]}")
+    else:
+        raise Exception(f"No supported loader for filetype of {source}")
 
 
 def writer(destination):
-    target_types = {
-        '.csv': lambda df, destination: df.to_csv(destination, index=False)
-    }
+    target_types = {".csv": lambda df, destination: df.to_csv(destination, index=False)}
     target_type = identify_source(destination)
-    return target_types[target_type]
+    if target_type in target_types:
+        return target_types[target_type]
+    elif hasattr(pd, f"read_{target_type[1:]}"):
+        return getattr(pd, f"read_{target_type[1:]}")
+    else:
+        raise Exception(f"No supported write for filetype of {destination}")
 
 
 @singledispatch
@@ -55,6 +62,16 @@ def _(datatype: Integer):
 @coerce_to_type.register
 def _(datatype: Float):
     return lambda x: x.astype(float)
+
+
+@coerce_to_type.register
+def _(datatype: String):
+    return lambda x: x.astype(str)
+
+
+@coerce_to_type.register
+def _(datatype: Bool):
+    return lambda x: x.astype(bool)
 
 
 class PythonDriver:

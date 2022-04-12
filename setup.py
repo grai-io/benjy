@@ -12,8 +12,9 @@ with (source_root / "README.md").open(encoding="utf-8") as f:
 with (source_root / "requirements.txt").open(encoding="utf8") as f:
     requirements = f.readlines()
 
-with open(os.path.join(source_root, "VERSION")) as version_file:
-    __version__ = version_file.read().strip()
+__version__ = None
+with (source_root / "src/benjy/version.py").open(encoding="utf8") as f:
+    exec(f.read())
 
 setup(
     name="benjy",

@@ -1,54 +1,49 @@
-# Company Sales
+!!! note
+    You can find also example Benjy projects [here](https://github.com/grai-io/benjy/tree/master/examples). 
+    A great place to start is with the [sales](https://github.com/grai-io/benjy/tree/master/examples/sales) demo 
+    you can run through live.
 
-In this demo we will walk through setting up and using Benjy with example data from a fake company. 
-This company has sales from three different sources `a`, `b`, and `c`. Although the company uses a universal customer
-id called `uuid` each source uses its' own, distinct, id. 
-
-We are going to combine all three sources, normalize to the `uuid` customer id, and aggregate sales in 4 hour intervals - all
-without _having_ to write SQL.
-
-## Getting started
-
-First, we will need to simulate some fake data for the project. You can do that by executing the `make_data.py` script 
-from this directory. We will also need to install a copy of benjy to get started.
-
-```bash
-pip install benjy
-python make_data.py
-```
-
-Inside the `/project` subdirectory you will see three folders:
-
-1. `data` - this contains the raw data resources we will be writing ETL's for. In our case we have sales records coming from three different sources (a, b, and c) each with different customer identifiers. We also have crosswalks between customer ids to a universal identifier shared across data sources. 
-2. `entities` - these represent relationships between our data. In this case we have an entity for each customer id. These entities have a couple of attributes including the source table, the column id of the source, and a relationship between the source id and the universal id.
-3. `output` - Where we are going to place our ETL output.
-
-Finally, we have a `schema.yml` file. These are declarative yaml files defining the expected output of a transformation.
 
 ## Using Benjy
 
-In order to automatically perform an ETL, Benjy first compiles your entities into a graph of relationships between data sources. 
-Let's give that a shot -
-
-```bash
-cd project
-benjy compile .
-```
-
-These compiled results are stored in the `build` subdirectory of our folder. We are now ready to execute our own ETL. 
-
-```bash
-benjy submit schema.yaml
-```
-
-Voila! Checkout the `/output` folder to find your ETL'ed data.
-
-
-## Exploring Further
-
-The default `schema.yaml` looks like this
+In order to automatically perform ETL jobs, Benjy builds a graph based model of the relationships between data throughout
+your organization. These relationships are declaratively defined and version controlled - a simple entity might look like this.
 
 ```yaml
+entities:
+  - name: source_a_id
+    source: sales_source_a_table
+    column: id
+    relations:
+      - name: uuid
+        crosswalk:
+          source: crosswalk_uuid_a_table
+          from: id_a
+          to: uuid
+```
+
+In this case we have an `id` field on the `sales_source_a_table` that is related to a `uuid` entity via a crosswalk.
+Benjy can combine these entities in complex ways to automatically produce ETL transformations for you, but first, it has
+to compile this assortment of entities into a graph.
+
+```shell
+benjy compile entities
+```
+
+These compiled results are stored in the `build` subdirectory of our working directory and we are now ready to execute 
+our own ETL. 
+
+## Executing a task
+
+ETL tasks, just like entities, are also purely declarative yaml files which can be stored in version control. Because
+we've encoded so much information about our data in the form of entities, much of the traditional boilerplate of
+a SQL pipeline can be stripped away leaving simple requests for the actual data we need. One example might look like
+this.
+
+
+```yaml
+# job.yaml
+
 target: 'output/result_table.csv'
 driver: 'python'
 sources:
@@ -71,6 +66,18 @@ columns:
     type:
       datatype: 'integer'
 ```
+
+Here we again have collections of data sources, a target we wish to output our job results, and a set of columns
+we wish to be in our final output. We can execute this job by simply running
+
+```bash
+benjy submit job.yaml
+```
+
+## Exploring Further
+
+!!! note
+    This section will make more sense if you follow along with the live demo at [sales](https://github.com/grai-io/benjy/tree/master/examples/sales)
 
 Much of this will be self-explanatory; We have a few sources we wish to draw data from, a location we want to place our 
 result, and a name for our result. The meat of the actual query definition falls under `columns`.
@@ -106,7 +113,3 @@ sales sources and can perform that process for us even if it requires many steps
 There's a lot more here - try it yourself - would you prefer sales were floats rather than integers? Change the datatype to `float`. How about 
 aggregating sales daily? Switch the frequency to `d`. Maybe you don't want to perform any aggregation? Remove the frequency
 argument on the timestamp column and the keyed argument on uuid!
-
-
-### TODO
-- [ ] currently requires python / pandas to generate data. Maybe migrate this to a separate repo and stick the data in vc.

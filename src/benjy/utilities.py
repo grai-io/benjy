@@ -4,23 +4,23 @@ import os
 import glob
 import pickle
 import itertools
-from .entities import built_entity_id
+from .entities import build_entity_id
 
 
 def read_yaml(file):
-    with open(file, 'r') as f:
+    with open(file, "r") as f:
         data = f.read()
         res = yaml.safe_load(data)
     return res
 
 
 def write_pickle(file, obj):
-    with open(file, 'wb') as f:
+    with open(file, "wb") as f:
         pickle.dump(obj, f)
 
 
 def read_pickle(file):
-    with open(file, 'rb') as f:
+    with open(file, "rb") as f:
         obj = pickle.load(f)
     return obj
 
@@ -33,15 +33,19 @@ def file_ref(file):
 class SourceRefs:
     def __init__(self, data_target, build_target):
         self.data_target = data_target
-        self.file_name = 'source_ref.pickle'
+        self.file_name = "source_ref.pickle"
         self.build_target = build_target
         self.source_refs = self.build_source_refs()
 
     def build_source_refs(self):
-        data_target = os.path.join(self.data_target, 'data')
+        data_target = os.path.join(self.data_target, "data")
         base_queries = ["*.*"]
-        path_queries = ['', '**']
-        glob_queries = (os.path.join(self.data_target, path, base) for base in base_queries for path in path_queries)
+        path_queries = ["", "**"]
+        glob_queries = (
+            os.path.join(self.data_target, path, base)
+            for base in base_queries
+            for path in path_queries
+        )
         files = itertools.chain(*(glob.iglob(query) for query in glob_queries))
         source_refs = {file_ref(file): file for file in files}
         return source_refs
@@ -58,7 +62,7 @@ class SourceRefs:
 
 
 def compile_entity_graph(folder):
-    entity_files = glob.glob(os.path.join(folder, 'entities', '*.yaml'))
+    entity_files = glob.glob(os.path.join(folder, "entities", "*.yaml"))
 
     nodes = [read_yaml(file) for file in entity_files]
 
@@ -66,19 +70,23 @@ def compile_entity_graph(folder):
     edge_data = {}
     node_data = {}
     for node in nodes:
-        namespace = node.get('namespace', 'default')
-        for entity in node['entities']:
+        namespace = node.get("namespace", "default")
+        for entity in node["entities"]:
             name = f"{namespace}.{entity['name']}"
             graph_dict.setdefault(name, {})
-            node_data[name] = {'source': built_entity_id(entity['source']), 'column': entity['column']}
-            for relation in entity.get('relations', []):
+
+            node_data[name] = {
+                "source": build_entity_id(entity["source"]),
+                "column": entity["column"],
+            }
+            for relation in entity.get("relations", []):
                 rel_name = f"{relation.get('namespace', 'default')}.{relation['name']}"
                 graph_dict[name] = {rel_name: rel_name}
 
                 edge_key = (name, rel_name)
-                edge_values = relation['crosswalk']
-                if 'source' in edge_values:
-                    edge_values['source'] = built_entity_id(edge_values['source'])
+                edge_values = relation["crosswalk"]
+                if "source" in edge_values:
+                    edge_values["source"] = build_entity_id(edge_values["source"])
                 edge_data[edge_key] = edge_values
 
     graph = nx.DiGraph(graph_dict)
@@ -89,11 +97,9 @@ def compile_entity_graph(folder):
 
 def process_source(source):
     if isinstance(source, str):
-        s = f'default.{source}'
+        s = f"default.{source}"
     elif isinstance(source, dict):
         s = f"{source['namespace']}.{source['name']}"
     else:
         raise Exception("Unrecognized source type")
     return s
-
-
