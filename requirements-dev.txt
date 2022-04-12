@@ -1,1 +1,3 @@
 black
+check-manifest
+pytest

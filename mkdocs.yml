@@ -1,6 +1,8 @@
 site_name: Benjy
 repo_url: https://github.com/grai-io/benjy
 repo_name: grai-io/benjy
+site_favicon: favicon.svg
+
 
 nav:
     - Home: index.md
@@ -10,8 +12,6 @@ nav:
         - Components: user_guide/components.md
     - API: reference/
     - cli: cli.md
-
-
 
 
 markdown_extensions:
