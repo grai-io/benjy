@@ -16,7 +16,8 @@ The end result is a graph expressing the relationships between all of your team 
 Because Benjy already understands how your data relates to each other, it can generate complicated query plans for you. 
 Imagine a typical organization with three 
 
-**TODO**: Need to sort out the meaning of the connections
+**TODO**: Need to sort out how to fix the connection labels
+
 ```mermaid
 erDiagram
     SALES_DB {
@@ -36,9 +37,3 @@ erDiagram
     }
     SALES_DB ||--o{ DATA_WAREHOUSE : crosswalk
 ```
-
-
-
-
-
-## 

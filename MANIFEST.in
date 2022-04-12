@@ -1,14 +1,16 @@
-include Docker
-include Docker-compose.yml
-include mkdocs.yml
-include README.md
-include Makefile
-include setup.py
 include LICENSE
+include README.md
+include mkdocs.yml
 include Manifest.in
-recursive-include requirements*.txt
-recursive-include examples/
-recursive-include benjy
+include requirements*.txt
 
-exclude examples
+recursive-include src *.py
+recursive-include docs *
+recursive-include examples *
+
+exclude Makefile
+exclude Dockerfile
+exclude Docker-compose.yml
+
+
 
