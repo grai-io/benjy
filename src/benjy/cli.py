@@ -20,6 +20,17 @@ def cli(ctx):
     ctx.ensure_object(dict)
 
 
+@cli.command("init")
+@click.pass_context
+def init(ctx, target):
+    """Initialize a basic benjy configuration folder"""
+    needed_folders = ['build', 'entities', 'data']
+    for f in needed_folders:
+        folder = os.path.join(target, f)
+        if not os.path.exists(folder):
+            os.mkdir(folder)
+
+
 @cli.command("compile")
 @click.argument("target", nargs=1, type=str)
 @click.pass_context

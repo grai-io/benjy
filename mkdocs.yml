@@ -1,15 +1,19 @@
 site_name: Benjy
 repo_url: https://github.com/grai-io/benjy
 repo_name: grai-io/benjy
-site_favicon: favicon.svg
+site_favicon: assets/favicon.svg
 
 
 nav:
-    - Home: index.md
-    - 'User Guide': 
-        - Installation: user_guide/installation.md
-        - "Getting Started": user_guide/getting_started.md
-        - Components: user_guide/components.md
+    - Introduction:
+        - 'What is Benjy': index.md
+        - Installation: introduction/installation.md
+        - "Getting Started": introduction/getting_started.md
+    - 'Benjy Components':
+        - Configuration: components/configuration.md
+        - Entities: components/entities.md
+        - Schemas: components/schemas.md
+
     - API: reference/
     - cli: cli.md
 
@@ -35,7 +39,7 @@ plugins:
     - section-index
     - gen-files:
         scripts:
-        - docs/gen_ref_pages.py
+        - docs/scripts/gen_ref_pages.py
     - literate-nav:
         nav_file: SUMMARY.md
     - mkdocstrings:
