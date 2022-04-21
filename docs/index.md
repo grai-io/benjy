@@ -1,20 +1,29 @@
 # What is Benjy?
 
-Benjy is a data as code tool allowing users to 
+Benjy is a data as code tool that lets teams define data transformation workflows as human-readable configuration files 
+they can version, reuse, and share. 
+A simple yaml file is all that’s needed to populate data from any connected source to any other, 
+and perform the needed transformations along the way.
 
-* Declaratively define and build their data environment, in code.
-* Define the relationships between data throughout an organization, in code.
-* Data search, discovery, and lineage. 
+With Benjy it's possible to
 
-Much like SQL allows you to define relationships between data within a single database, 
-Benjy allows you to define relationships between data across multiple data resources (databases, flat files, APIs, etc...).
-The end result is a graph expressing the relationships between all of your team or organization's data.
+* Deploy a new data warehouse as easily as you would deploy a docker container - all in version control
+* Build data search, lineage, and discovery directly into your organization, all in code.
+* Version control ad-hoc analytics queries, and much more.
+
+## How does it work?
+
+Benjy sits on top of your existing infrastructure providing a simple, declarative, and most importantly,
+version controlled system for describing your data environment. 
+Rather than writing complicated SQL code to build data pipelines you instead write basic
+`yaml` files describing what data should be placed where. 
+Benjy handles the boilerplate for you.
 
 
-# How does it work?
+<!---
+## Data Relations
 
-Because Benjy already understands how your data relates to each other, it can generate complicated query plans for you. 
-Imagine a typical organization with three 
+In order to build
 
 **TODO**: Need to sort out how to fix the connection labels
 
@@ -37,3 +46,4 @@ erDiagram
     }
     SALES_DB ||--o{ DATA_WAREHOUSE : crosswalk
 ```
+-->
