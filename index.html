@@ -131,9 +131,26 @@
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item md-nav__item--active">
 <input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          What is Benjy
+          <span class="md-nav__icon md-icon"></span>
+</label>
 <a class="md-nav__link md-nav__link--active" href=".">
         What is Benjy
       </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#how-does-it-work">
+    How does it work?
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="introduction/installation/">
@@ -305,19 +322,29 @@
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"></path></svg>
 </a>
 <h1 id="what-is-benjy">What is Benjy?</h1>
-<p>Benjy is a data as code tool allowing users to </p>
+<p>Benjy is a data as code tool that lets teams define data transformation workflows as human-readable configuration files 
+they can version, reuse, and share. 
+A simple yaml file is all that’s needed to populate data from any connected source to any other, 
+and perform the needed transformations along the way.</p>
+<p>With Benjy it’s possible to</p>
 <ul>
-<li>Declaratively define and build their data environment, in code.</li>
-<li>Define the relationships between data throughout an organization, in code.</li>
-<li>Data search, discovery, and lineage. </li>
+<li>Deploy a new data warehouse as easily as you would deploy a docker container - all in version control</li>
+<li>Build data search, lineage, and discovery directly into your organization, all in code.</li>
+<li>Version control ad-hoc analytics queries, and much more.</li>
 </ul>
-<p>Much like SQL allows you to define relationships between data within a single database, 
-Benjy allows you to define relationships between data across multiple data resources (databases, flat files, APIs, etc…).
-The end result is a graph expressing the relationships between all of your team or organization’s data.</p>
-<h1 id="how-does-it-work">How does it work?</h1>
-<p>Because Benjy already understands how your data relates to each other, it can generate complicated query plans for you. 
-Imagine a typical organization with three </p>
-<p><strong>TODO</strong>: Need to sort out how to fix the connection labels</p>
+<h2 id="how-does-it-work">How does it work?</h2>
+<p>Benjy sits on top of your existing infrastructure providing a simple, declarative, and most importantly,
+version controlled system for describing your data environment. 
+Rather than writing complicated SQL code to build data pipelines you instead write basic
+<code>yaml</code> files describing what data should be placed where. 
+Benjy handles the boilerplate for you.</p>
+<!---
+## Data Relations
+
+In order to build
+
+**TODO**: Need to sort out how to fix the connection labels
+
 <pre class="mermaid"><code>erDiagram
     SALES_DB {
         int transaction_id
@@ -335,6 +362,7 @@ Imagine a typical organization with three </p>
         int marketing_user_id
     }
     SALES_DB ||--o{ DATA_WAREHOUSE : crosswalk</code></pre>
+-->
 </article>
 </div>
 </div>
